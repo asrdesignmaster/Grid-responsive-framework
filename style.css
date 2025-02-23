@@ -144,7 +144,7 @@ html, body, h1, h2, h3, h4, h5, h6, p
 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min-col-size), 100%), 1fr) );
-    gap: 24px;
+    grid-gap: 24px;
 }
 .grid-full-width{ grid-column: 1 / -1 ; }
 
@@ -165,17 +165,17 @@ html, body, h1, h2, h3, h4, h5, h6, p
 .font-32{font-size: var(--fs-32px);}
 .font-48{font-size: var(--fs-48px);}
 
-.gap-4{gap: var(--_4px);}
-.gap-8{gap: var(--_8px);}
-.gap-12{gap: var(--_12px);}
-.gap-14{gap: var(--_14px);}
-.gap-16{gap: var(--_16px);}
-.gap-18{gap: var(--_18px);}
-.gap-20{gap: var(--_20px);}
-.gap-24{gap: var(--_24px);}
-.gap-28{gap: var(--_28px);}
-.gap-32{gap: var(--_32px);}
-.gap-48{gap: var(--_48px);}
+.gap-4{grid-gap: var(--_4px);}
+.gap-8{grid-gap: var(--_8px);}
+.gap-12{grid-gap: var(--_12px);}
+.gap-14{grid-gap: var(--_14px);}
+.gap-16{grid-gap: var(--_16px);}
+.gap-18{grid-gap: var(--_18px);}
+.gap-20{grid-gap: var(--_20px);}
+.gap-24{grid-gap: var(--_24px);}
+.gap-28{grid-gap: var(--_28px);}
+.gap-32{grid-gap: var(--_32px);}
+.gap-48{grid-gap: var(--_48px);}
 
 .p-4{padding: var(--_4px);}
 .p-8{padding: var(--_8px);}
@@ -365,8 +365,9 @@ img{ max-width: 100%; }
 .grid-container{
     max-width: var(--container-max-width);
     display: grid;
-    gap: 3em;
+    grid-gap: var(--_48px);
     margin: 0 auto;
+    padding: 0;
 }
 .grid-container .two-col,
 .grid-container .three-col,
@@ -582,7 +583,6 @@ Base Button Styles
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
@@ -649,7 +649,56 @@ textarea {
 }
 
 .form-check-input {
+    margin: 0;
     margin-right: var(--_8px);
+}
+
+
+
+/* Reference https://www.youtube.com/watch?v=tNBufpGQihY 
+/* https://developer.chrome.com/blog/rfc-customizable-select
+
+/* enter custom mode */
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
+/* style the button */
+::select-fallback-button {
+  background: gold;
+  font-family: fantasy;
+  font-size: 1.2rem;
+}
+
+/* style the picker dropdown */
+::picker(select) {
+  border-radius: 1rem;
+}
+
+/* style the options */
+option {
+  font-family: monospace;
+  padding: 0.5rem 1rem 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+/* style selected option in the dropdown */
+option:checked {
+  background: powderblue;
+}
+
+/* style the option on hover or focus */
+option:hover,
+option:focus-visible {
+  background-color: pink;
+}
+
+/* style the active option indicator */
+option::before {
+  content: '🩷';
+  font-size: 80%;
+  margin: 0.5rem;
 }
 
 
@@ -668,9 +717,6 @@ Responsive Query
         width: 100%;
         width: -webkit-fill-available;
     }
-    .grid-container{
-        padding: 0 16px;
-    }
 }
 @media screen and (min-width:768px) {
     .grid-container .two-col,
@@ -680,6 +726,8 @@ Responsive Query
     .grid-container .twelve-col 
     { grid-template-columns: repeat(2, 1fr);  }
     .grid-container .six-col { grid-template-columns: repeat(3, 1fr);  }
+
+    
 }
 @media screen and (min-width:1200px) {
         
@@ -702,8 +750,35 @@ Responsive Query
 
 }
 
+@media screen and (max-width:1200px) {
+    .grid-container{
+        padding: 0 16px;
+    }
+}
+
 
 /* =====================================================================*/
 h3{ font-size: 24px; font-weight: 500; margin-bottom: 16px;}
 .header{ background-color: #dbdbdb; padding-top: 16px; padding-bottom: 16px;}
-.auto-fit-card{--grid-min-col-size:350px;}
+.auto-fit-card{--grid-min-col-size:350px;
+div:last-child{
+    grid-column: 2 / 4;
+}
+}
+
+
+@media screen and (max-width:1200px) {
+    .auto-fit-card{
+        div:last-child{
+            grid-column: 1 / span 2;
+        }
+    }
+}
+
+@media screen and (max-width:520px) {
+    .auto-fit-card{
+        div:last-child{
+            grid-column: unset;
+        }
+    }
+}
