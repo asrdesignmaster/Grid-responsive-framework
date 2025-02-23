@@ -139,6 +139,15 @@ html, body, h1, h2, h3, h4, h5, h6, p
 .block{ display: block; }
 .hide{ display: none; }
 
+.grid-auto-fit{ 
+    --grid-min-col-size:200px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min-col-size), 100%), 1fr) );
+    gap: 24px;
+}
+.grid-full-width{ grid-column: 1 / -1 ; }
+
 .text-left{text-align: left;}
 .text-center{text-align: center;}
 .text-right{text-align: right;}
@@ -568,6 +577,7 @@ Base Button Styles
 ------------------------*/
 .form-group {
     margin-bottom: 1rem;
+    display: grid;
 }
 
 label {
@@ -658,6 +668,9 @@ Responsive Query
         width: 100%;
         width: -webkit-fill-available;
     }
+    .grid-container{
+        padding: 0 16px;
+    }
 }
 @media screen and (min-width:768px) {
     .grid-container .two-col,
@@ -691,5 +704,6 @@ Responsive Query
 
 
 /* =====================================================================*/
-
+h3{ font-size: 24px; font-weight: 500; margin-bottom: 16px;}
 .header{ background-color: #dbdbdb; padding-top: 16px; padding-bottom: 16px;}
+.auto-fit-card{--grid-min-col-size:350px;}
